@@ -43,7 +43,7 @@ jobs:
         # 失敗したときは、最後の行をエラー表示（annotation）に出す
         run: |
           set -o pipefail
-          npx electron-builder --win --x64 --publish always 2>&1 | tee build.log || { tail -n 25 build.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error::$l"; done; exit 1; }
+          npx electron-builder --win --x64 --publish always 2>&1 | tee build.log || { grep -E "⨯|rror|\"message\"|statusCode|status code|publish" build.log | grep -v "^\s*\"x-" | tail -n 9 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error::$l"; done; exit 1; }
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # コード署名する場合は、証明書を Secrets に登録して次の2行を有効にする
