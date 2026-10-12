@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+<title>AI</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<link rel="stylesheet" href="aichat.css">
+</head>
+<body>
+  <header>
+    <div id="context"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4"/></svg><span id="page-title"></span></div>
+    <button id="reset" data-i18n-title="aic.reset"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+  </header>
+  <main id="log"></main>
+  <!-- APIキーの設定（キーはこのPCの中に暗号化して保存し、画面には戻さない） -->
+  <section id="setup" hidden>
+    <h1 data-i18n="aic.setupTitle"></h1>
+    <p data-i18n="aic.setupText"></p>
+    <label><span data-i18n="aic.provider"></span><select id="provider"></select></label>
+    <label><span data-i18n="aic.key"></span><input id="key" type="password" autocomplete="off" spellcheck="false"></label>
+    <label><span data-i18n="aic.model"></span><input id="model" spellcheck="false"></label>
+    <div class="actions">
+      <button id="get-key" class="link" data-i18n="aic.getKey"></button>
+      <button id="save" class="primary" data-i18n="aic.save"></button>
+    </div>
+    <p class="note" id="setup-note"></p>
+  </section>
+  <footer id="foot"><button id="settings" class="link" data-i18n="aic.change"></button></footer>
+  <script src="i18n.js"></script>
+  <script src="aichat.js"></script>
+</body>
+</html>

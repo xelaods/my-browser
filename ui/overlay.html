@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https: http: data:">
+<title>overlay</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<link rel="stylesheet" href="overlay.css">
+</head>
+<body>
+  <!-- mode=stack：ページ右上のカード（ページ内検索・権限の確認・通知）
+       mode=popup：URL欄の候補・サイト情報・ダウンロード一覧 -->
+  <div id="root"></div>
+  <script src="i18n.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>

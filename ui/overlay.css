@@ -1,0 +1,137 @@
+@font-face {
+  font-family: "Geist";
+  src: url("fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+}
+:root {
+  color-scheme: light;
+  --card: #ffffff; --text: #111111; --muted: #6b6b6b; --faint: #a3a3a3;
+  --border: #e5e5e5; --ring: #c4c4c4; --fill: #f2f2f2; --hover: rgba(0, 0, 0, .045); --sel: rgba(0, 0, 0, .06);
+  --primary: #111111; --on-primary: #ffffff; --danger: #e40014; --ok: #1a7f37;
+  --shadow: 0 4px 12px rgba(0, 0, 0, .09), 0 1px 3px rgba(0, 0, 0, .06);
+}
+:root[data-theme="dark"] {
+  & {
+    color-scheme: dark;
+    --card: #1b1b1b; --text: #ededed; --muted: #a1a1a1; --faint: #6e6e6e;
+    --border: #2c2c2c; --ring: #464646; --fill: #252525; --hover: rgba(255, 255, 255, .06); --sel: rgba(255, 255, 255, .08);
+    --primary: #ededed; --on-primary: #111111; --danger: #ff4d5a; --ok: #3fb950;
+    --shadow: 0 4px 12px rgba(0, 0, 0, .5), 0 1px 3px rgba(0, 0, 0, .3);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: transparent; overflow: hidden; }
+body {
+  color: var(--text); font: 13px/1.45 "Geist", "Noto Sans JP Variable", sans-serif;
+  -webkit-font-smoothing: antialiased; user-select: none;
+}
+/* カードの影がビューの端で切れないよう、周りに余白を取る（main.js の PAD と同じ値） */
+#root { padding: 4px 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+body.popup #root { padding: 0 12px 16px; }
+svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; padding: 0; }
+
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow);
+  animation: pop .14s ease-out;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(-4px); } }
+
+.icon-btn { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; color: var(--muted); flex-shrink: 0; }
+.icon-btn:hover { background: var(--hover); color: var(--text); }
+.icon-btn:disabled { opacity: .35; cursor: default; background: none; }
+.pill {
+  height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+  font-size: 12.5px; white-space: nowrap; transition: border-color .12s, color .12s;
+}
+.pill:hover { color: var(--text); border-color: var(--ring); }
+.pill.pri { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.pill.pri:hover { opacity: .88; }
+.muted { color: var(--muted); }
+.faint { color: var(--faint); font-size: 11.5px; }
+.ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ===== ページ内検索 ===== */
+.find { display: flex; align-items: center; gap: 2px; padding: 5px 5px 5px 12px; }
+.find input { flex: 1; min-width: 0; height: 28px; border: none; outline: none; background: none; font-size: 13px; }
+.find input::placeholder { color: var(--faint); }
+.find .count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; padding: 0 6px; white-space: nowrap; }
+.find .count.none { color: var(--danger); }
+.find .sep { width: 1px; height: 16px; background: var(--border); margin: 0 3px; }
+
+/* ===== 確認・通知カード ===== */
+.note { padding: 12px 12px 10px 14px; }
+.note .head { display: flex; align-items: flex-start; gap: 10px; }
+.note .badge { width: 28px; height: 28px; border-radius: 8px; background: var(--fill); display: grid; place-items: center; color: var(--muted); flex-shrink: 0; }
+.note .grow { flex: 1; min-width: 0; padding-top: 1px; }
+.note .host { font-weight: 500; letter-spacing: -.01em; }
+.note .actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+
+/* ===== ポップアップ共通 ===== */
+.panel { overflow: hidden; display: flex; flex-direction: column; max-height: 520px; }
+.panel header { display: flex; align-items: center; gap: 8px; padding: 12px 10px 8px 14px; }
+.panel header .title { font-weight: 500; letter-spacing: -.01em; flex: 1; min-width: 0; }
+.panel .scroll { overflow-y: auto; }
+.panel .scroll::-webkit-scrollbar { width: 6px; }
+.panel .scroll::-webkit-scrollbar-thumb { background: var(--ring); border-radius: 3px; }
+.panel section { padding: 8px 14px; border-top: 1px solid var(--border); }
+.panel h3 { margin: 2px 0 6px; font-size: 11.5px; font-weight: 500; color: var(--muted); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 32px; }
+.row > span { display: flex; flex-direction: column; min-width: 0; }
+select {
+  height: 28px; padding: 0 6px; border-radius: 7px; border: 1px solid var(--border); background: var(--card);
+  outline: none; cursor: pointer; font-size: 12.5px;
+}
+.switch {
+  appearance: none; width: 34px; height: 19px; border-radius: 999px; background: var(--ring);
+  position: relative; cursor: pointer; flex-shrink: 0; transition: background-color .15s; margin: 0;
+}
+.switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%;
+  background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+.switch:checked { background: var(--primary); }
+.switch:checked::after { transform: translateX(15px); background: var(--card); }
+.switch:disabled { opacity: .4; cursor: default; }
+
+/* サイト情報 */
+.state { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12.5px; padding: 0 14px 10px; }
+.state.secure svg { color: var(--ok); }
+.state.insecure, .state.danger { color: var(--danger); }
+.footer { display: flex; gap: 6px; padding: 10px 14px 12px; border-top: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+.footer .msg { font-size: 11.5px; color: var(--muted); flex-basis: 100%; }
+.footer .msg:empty { display: none; }
+
+/* URL欄の候補 */
+.suggest { padding: 4px; border-radius: 10px; }
+.sugg {
+  display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 7px; cursor: default;
+}
+.sugg:hover { background: var(--hover); }
+.sugg.sel { background: var(--sel); }
+.sugg .ic { width: 16px; height: 16px; color: var(--faint); display: grid; place-items: center; flex-shrink: 0; }
+.sugg .ic img { width: 16px; height: 16px; border-radius: 3px; }
+.sugg .t { flex-shrink: 1; min-width: 0; }
+.sugg .u { color: var(--faint); font-size: 12px; flex: 1; min-width: 0; }
+.sugg .u::before { content: "— "; }
+
+/* ダウンロード */
+.dl { display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 14px; }
+.dl + .dl { border-top: 1px solid var(--border); }
+.dl .file { width: 30px; height: 30px; border-radius: 8px; background: var(--fill); display: grid; place-items: center; color: var(--muted); flex-shrink: 0; font-size: 9.5px; font-weight: 600; text-transform: uppercase; }
+.dl .file.danger { color: var(--danger); }
+.dl .grow { flex: 1; min-width: 0; }
+.dl .name { cursor: default; }
+.dl.done .name { cursor: pointer; }
+.dl.done .name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.dl.off .name { color: var(--faint); text-decoration: line-through; }
+.dl .progress { height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; margin: 4px 0 2px; }
+.dl .progress span { display: block; height: 100%; background: var(--text); }
+.empty { padding: 18px 14px 20px; text-align: center; color: var(--faint); font-size: 12.5px; }
+
+/* パスワード */
+.note .pw-user { font-size: 12.5px; margin-top: 2px; font-weight: 500; }
+.pw .pw-head { font-size: 11px; color: var(--faint); padding: 6px 10px 4px; }
+.pw .dots { color: var(--faint); font-size: 11px; letter-spacing: 1px; margin-left: auto; }
+.pw .manage { color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); border-radius: 0 0 7px 7px; margin-top: 4px; height: 32px; }

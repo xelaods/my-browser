@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https: http: data: crx:">
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 上：タイトルバー（つかんでウィンドウを移動、ダブルクリックで最大化） -->
+  <header id="titlebar">
+
+    <!-- URL欄（ウィンドウ全体の真ん中に小さく。普段はドメインだけ、クリックでURL全体を表示して入力） -->
+    <div id="omni-wrap">
+      <div id="omni">
+        <span id="private-chip" data-i18n-title="bar.privateChip">
+          <svg viewBox="0 0 24 24"><path d="M3 11h18"/><path d="M6 11l1.6-5.2a1 1 0 0 1 1-.7h6.8a1 1 0 0 1 1 .7L18 11"/><circle cx="8" cy="16" r="2.6"/><circle cx="16" cy="16" r="2.6"/><path d="M10.6 16h2.8"/></svg>
+        </span>
+        <button id="site" data-i18n-title="bar.site">
+          <svg viewBox="0 0 24 24" class="i-secure"><rect x="5.5" y="10.5" width="13" height="9.5" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+          <svg viewBox="0 0 24 24" class="i-insecure"><path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4M12 16.8v.01"/></svg>
+          <svg viewBox="0 0 24 24" class="i-file"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></svg>
+        </button>
+        <input id="address" data-i18n-placeholder="bar.address" spellcheck="false" autocomplete="off">
+        <div id="omni-right">
+          <button id="translate" data-i18n-title="bar.translate">
+            <svg viewBox="0 0 24 24"><path d="M4 5.5h8M8 4v1.5M5.5 5.5c.6 2.6 2.6 5 5.5 6.5M10.5 5.5c-.7 3-2.8 5.6-6 7"/><path d="M12.5 20l3.75-9 3.75 9M13.8 17h4.9"/></svg>
+          </button>
+          <button id="zoom" data-i18n-title="bar.zoom">100%</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 左のボタンは URL欄（ウィンドウ移動用の領域）より後に書く。先に書くと、その領域に覆われて押せなくなる -->
+    <div class="group" id="left-group">
+      <button id="toggle-sidebar" class="icon" data-i18n-title="bar.toggleSidebar">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+      </button>
+      <button id="back" class="icon" data-i18n-title="bar.back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button id="forward" class="icon" data-i18n-title="bar.forward"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button id="reload" class="icon" data-i18n-title="bar.reload"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+    </div>
+    <div class="group">
+      <!-- 拡張機能のボタン（Chromeウェブストアから追加したもの） -->
+      <div id="ext-actions"></div>
+      <button id="downloads" class="icon" data-i18n-title="bar.downloads">
+        <svg viewBox="0 0 24 24"><path d="M12 4v10.5M7.5 10l4.5 4.5 4.5-4.5M5 19.5h14"/></svg>
+        <span class="bar"><span></span></span>
+      </button>
+      <button id="settings" class="icon" data-i18n-title="bar.settings">
+        <svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      </button>
+      <!-- AIパネルのボタン（オリジナルアイコン：吹き出し＋考え中の点＋右上の印） -->
+      <button id="ai-toggle" class="icon ai-btn" data-i18n-title="bar.ai">
+        <svg viewBox="0 0 24 24" class="ai-icon">
+          <path d="M5.5 5h9A3.5 3.5 0 0 1 18 8.5v5a3.5 3.5 0 0 1-3.5 3.5H10l-3.6 3v-3h-.9A3.5 3.5 0 0 1 2 13.5v-5A3.5 3.5 0 0 1 5.5 5z"/>
+          <circle cx="6.8" cy="11" r="1.05" class="fill"/>
+          <circle cx="10" cy="11" r="1.05" class="fill"/>
+          <circle cx="13.2" cy="11" r="1.05" class="fill"/>
+          <circle cx="19.6" cy="4.4" r="2.4" class="fill accent"/>
+        </svg>
+      </button>
+      <span class="sep"></span>
+      <button id="win-min" class="icon win" data-i18n-title="bar.minimize"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>
+      <button id="win-max" class="icon win" data-i18n-title="bar.maximize"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg></button>
+      <button id="win-close" class="icon win close" data-i18n-title="common.close"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+    </div>
+  </header>
+
+  <!-- 左：縦タブのサイドバー -->
+  <aside id="sidebar">
+    <!-- お気に入り（アイコンのみ・全プロフィール共通） -->
+    <div id="favorites">
+      <div class="empty-hint" data-i18n="side.favHint"></div>
+    </div>
+
+    <div class="section-row"><div class="section-label" id="pinned-label"></div><button id="new-folder" class="mini" data-i18n-title="folder.new"><svg viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg></button></div>
+    <div id="pinned" class="list" data-pinned="1">
+      <div class="empty-hint" data-i18n="side.pinHint"></div>
+    </div>
+
+    <div class="divider">
+      <span data-i18n="side.today"></span>
+      <button id="clear" class="text-btn" data-i18n-title="side.tidyTitle" data-i18n="side.tidy"></button>
+    </div>
+    <button id="new" class="new-tab" data-i18n-title="side.newTabTitle">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="common.newTab"></span>
+    </button>
+    <div id="today" class="list" data-pinned="0"></div>
+
+    <!-- プロフィールの切り替え -->
+    <div id="profiles"></div>
+  </aside>
+
+  <!-- 幅を変える境目 -->
+  <div id="sidebar-handle" class="handle" data-i18n-title="side.resize"></div>
+  <div id="ai-handle" class="handle" data-i18n-title="side.resize"></div>
+
+  <!-- ページとAIの縁取り（ページの真後ろに1px大きく敷く） -->
+  <div id="page-frame" class="frame"></div>
+  <div id="pane-frames"></div>
+  <div id="ai-frame" class="frame"></div>
+
+  <!-- 右：AIパネルの操作部分（AIのページはこの下に表示） -->
+  <section id="ai-panel">
+    <div class="row">
+      <select id="ai-select" data-i18n-title="ai.select"></select>
+      <button id="ai-open-tab" class="icon" data-i18n-title="ai.openTab">
+        <svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+      </button>
+      <button id="ai-reload" class="icon" data-i18n-title="ai.reload"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+    </div>
+    <div class="row chips" id="prompts"></div>
+    <form class="row" id="ask">
+      <input id="question" data-i18n-placeholder="ai.question" spellcheck="false">
+      <button type="submit" class="icon" data-i18n-title="ai.send"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+    </form>
+    <div id="ai-status" data-i18n="ai.hint"></div>
+  </section>
+
+  <script src="i18n.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

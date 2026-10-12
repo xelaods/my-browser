@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'">
+<title>Privacy Policy</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  :root { color-scheme: light; --bg: #fff; --text: #111; --muted: #6b6b6b; --border: #e5e5e5; }
+  :root[data-theme="dark"] { & { color-scheme: dark; --bg: #161616; --text: #ededed; --muted: #a1a1a1; --border: #2a2a2a; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.8 "Geist", "Noto Sans JP Variable", sans-serif; -webkit-font-smoothing: antialiased; }
+  main { max-width: 680px; margin: 0 auto; padding: 56px 28px 80px; }
+  h1 { font-size: 26px; font-weight: 600; letter-spacing: -.02em; margin: 0 0 6px; }
+  .date { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; margin: 32px 0 8px; padding-top: 24px; border-top: 1px solid var(--border); }
+  p, li { color: var(--text); }
+  ul { padding-left: 1.2em; }
+  li { margin: 4px 0; }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <div class="date">My Browser · Last updated October 2026</div>
+
+  <p>My Browser does not send your browsing data to the developer or to third parties. Everything is stored on your computer.</p>
+
+  <h2>What is stored on your computer</h2>
+  <ul>
+    <li>Open tabs, favorites, profiles and settings</li>
+    <li>Browsing history (used for address bar suggestions; can be turned off in Settings)</li>
+    <li>Cookies, sign-ins and other site data (stored the same way Chromium does)</li>
+    <li>Permissions you allowed or blocked for sites (camera, microphone, location, notifications, etc.)</li>
+    <li>Extensions you add from the Chrome Web Store</li>
+  </ul>
+  <p>History, cookies and cache from private tabs are never saved and are deleted when you close all private tabs. You can find the data folder in Settings → System → Data folder.</p>
+
+  <h2>What connects to the internet</h2>
+  <ul>
+    <li><b>Websites you visit</b>: like any browser, pages load what they need.</li>
+    <li><b>Search engine</b>: when you search from the address bar or the new tab page, your query is sent to the search engine you chose. What you type is not sent while typing (suggestions come from your local history and favorites).</li>
+    <li><b>AI panel</b>: only when you press a button such as “Summarize”, the title, URL and text of the current page (or your selection) is pasted into the input box of the AI service open in the AI panel. You decide whether to send it. What you send is handled under that AI service’s privacy policy.</li>
+    <li><b>Ad and tracker blocking</b>: every few days, blocking lists (EasyList, EasyPrivacy and others) are downloaded from GitHub. No information about the pages you visit is sent.</li>
+    <li><b>Extensions</b>: extensions are downloaded from and updated through the Chrome Web Store. Extensions you add follow their own privacy policies.</li>
+    <li><b>Automatic updates</b>: the installed version checks GitHub for new versions. Only what is needed for updating (such as the app version) is sent. You can turn this off in Settings.</li>
+  </ul>
+
+  <h2>What is not sent</h2>
+  <ul>
+    <li>No usage statistics (telemetry) or crash reports are sent.</li>
+    <li>No advertising IDs or tracking are used.</li>
+  </ul>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li>You can delete history, cookies and cache at any time in Settings → Privacy.</li>
+    <li>You can change site permissions from the lock icon in the address bar or in Settings → Privacy.</li>
+    <li>With “Ask sites not to track me” on, sites receive Global Privacy Control (GPC).</li>
+  </ul>
+
+  <h2>Contact</h2>
+  <p class="muted">Please contact us through the project page (GitHub repository).</p>
+</main>
+</body>
+</html>

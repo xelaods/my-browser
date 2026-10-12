@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "Geist";
+  src: url("fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+}
+:root {
+  color-scheme: light;
+  --card: #ffffff; --text: #111111; --muted: #6b6b6b; --faint: #a3a3a3; --border: #e5e5e5; --ring: #c4c4c4;
+  --dim: rgba(20, 20, 20, .28); --primary: #111; --on-primary: #fff;
+}
+:root[data-theme="dark"] {
+  & { color-scheme: dark; --card: #1c1c1c; --text: #ededed; --muted: #a1a1a1; --faint: #6e6e6e; --border: #2e2e2e; --ring: #464646; --dim: rgba(0, 0, 0, .55); --primary: #ededed; --on-primary: #111; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+body { color: var(--text); font: 13px/1.4 "Geist", "Noto Sans JP Variable", sans-serif; -webkit-font-smoothing: antialiased; user-select: none; }
+svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+body:not(.show) > * { display: none !important; }
+
+#dim { position: fixed; inset: 0; background: var(--dim); animation: fade .15s ease-out; }
+@keyframes fade { from { opacity: 0; } }
+#frame { position: absolute; border-radius: 12px; background: var(--border); box-shadow: 0 30px 80px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .15); }
+#bar { position: absolute; display: flex; align-items: center; gap: 8px; height: 34px; }
+#info {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px;
+  border-radius: 999px; background: var(--card); color: var(--muted); max-width: max-content; border: 1px solid var(--border);
+}
+#host { color: var(--text); font-weight: 500; white-space: nowrap; }
+#title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+#title:not(:empty)::before { content: "—  "; color: var(--faint); }
+#mask { display: none; }
+body.private #mask { display: block; }
+#spin { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--border); border-top-color: var(--text); animation: spin .8s linear infinite; display: none; flex-shrink: 0; }
+body.loading #spin { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.buttons { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
+button { font: inherit; color: var(--text); cursor: pointer; border: 1px solid var(--border); background: var(--card); }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 13px; border-radius: 999px; font-size: 12.5px; }
+.pill:hover, .round:hover { border-color: var(--ring); }
+#tab { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+#tab:hover { opacity: .88; }
+.round { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; }

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https: http: data:">
+<title>palette</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<link rel="stylesheet" href="palette.css">
+</head>
+<body>
+  <!-- 新しいタブ（Ctrl+T）とコマンドバー（Ctrl+K）。画面中央に浮かぶ検索ボックス -->
+  <div id="dim"></div>
+  <div id="card" role="dialog">
+    <div class="bar">
+      <svg viewBox="0 0 24 24" class="lead"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+      <input id="q" spellcheck="false" autocomplete="off">
+      <span id="chip"></span>
+    </div>
+    <div id="list"></div>
+    <div class="foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="pal.select"></span></span>
+      <span><kbd>Enter</kbd> <span data-i18n="pal.open"></span></span>
+      <span><kbd>Shift</kbd>+<kbd>Enter</kbd> <span data-i18n="pal.beside"></span></span>
+      <span><kbd>Esc</kbd> <span data-i18n="common.close"></span></span>
+    </div>
+  </div>
+  <script src="i18n.js"></script>
+  <script src="palette.js"></script>
+</body>
+</html>

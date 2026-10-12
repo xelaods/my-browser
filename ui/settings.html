@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https: http: data: crx:">
+<title>Settings</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <!-- 右上に浮かぶ設定パネル。カードの外をクリックするか Esc で閉じる（文字は i18n.js） -->
+  <div id="card" role="dialog" data-i18n-label="set.title">
+    <header>
+      <h1 data-i18n="set.title"></h1>
+      <button id="close" class="icon" data-i18n-title="common.closeEsc"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+    </header>
+    <nav id="tabs">
+      <button data-tab="general" data-i18n="set.tabGeneral"></button>
+      <button data-tab="privacy" data-i18n="set.tabPrivacy"></button>
+      <button data-tab="passwords" data-i18n="set.tabPasswords"></button>
+      <button data-tab="history" data-i18n="set.tabHistory"></button>
+      <button data-tab="profiles" data-i18n="set.tabProfiles"></button>
+      <button data-tab="extensions" data-i18n="set.extensions"></button>
+      <button data-tab="import" data-i18n="set.tabImport"></button>
+      <button data-tab="system" data-i18n="set.tabSystem"></button>
+    </nav>
+
+    <div class="scroll">
+      <!-- ===== 一般 ===== -->
+      <div class="page" data-page="general">
+        <section>
+          <h2 data-i18n="set.appearance"></h2>
+          <div class="segmented" id="theme">
+            <button data-v="light" data-i18n="set.light"></button>
+            <button data-v="dark" data-i18n="set.dark"></button>
+            <button data-v="system" data-i18n="set.system"></button>
+          </div>
+          <div class="row col">
+            <span><span data-i18n="set.sideColor"></span><small data-i18n="set.sideColorNote"></small></span>
+            <div class="swatches" id="sw-side"></div>
+          </div>
+          <div class="row col">
+            <span><span data-i18n="set.topColor"></span><small data-i18n="set.topColorNote"></small></span>
+            <div class="swatches" id="sw-top"></div>
+          </div>
+          <div class="row slider"><span data-i18n="set.colorAlpha"></span><input type="range" id="color-alpha" min="15" max="100" step="5"><output id="color-alpha-v"></output></div>
+          <label class="row">
+            <span><span data-i18n="set.sideButtons"></span><small data-i18n="set.sideButtonsNote"></small></span>
+            <select id="side-buttons">
+              <option value="profile" data-i18n="set.sbProfile"></option>
+              <option value="history" data-i18n="set.sbHistory"></option>
+              <option value="off" data-i18n="set.sbOff"></option>
+            </select>
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.language"></span><small data-i18n="set.languageNote"></small></span>
+            <select id="lang">
+              <option value="system" data-i18n="set.langSystem"></option>
+              <option value="ja">日本語</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+        </section>
+        <section>
+          <h2 data-i18n="set.basic"></h2>
+          <label class="row"><span data-i18n="set.searchEngine"></span><select id="engine"></select></label>
+          <label class="row"><span data-i18n="set.aiService"></span><select id="ai"></select></label>
+          <label class="row">
+            <span><span data-i18n="set.autoPip"></span><small data-i18n="set.autoPipNote"></small></span>
+            <input type="checkbox" class="switch" data-option="autoPip">
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.restore"></span><small data-i18n="set.restoreNote"></small></span>
+            <input type="checkbox" id="restore" class="switch">
+          </label>
+          <div class="row">
+            <span><span data-i18n="set.defaultBrowser"></span><small id="default-msg" data-i18n="set.defaultBrowserNote"></small></span>
+            <button class="pill" id="make-default" data-i18n="set.defaultBrowserButton"></button>
+          </div>
+        </section>
+        <section>
+          <h2 data-i18n="sync.title"></h2>
+          <div class="row">
+            <span><span data-i18n="sync.label"></span><small id="sync-path"></small></span>
+            <select id="sync-mode">
+              <option value="off" data-i18n="sync.off"></option>
+              <option value="onedrive" data-i18n="sync.onedrive"></option>
+              <option value="pick" data-i18n="sync.pick"></option>
+            </select>
+          </div>
+          <p class="note" data-i18n="sync.note"></p>
+        </section>
+        <section>
+          <h2 data-i18n="set.limits"></h2>
+          <p class="note" data-i18n="set.limitsNote"></p>
+          <div id="limits" class="list" data-i18n-empty="common.none"></div>
+          <form class="add" id="limit-form">
+            <input id="limit-site" data-i18n-placeholder="set.limitSite" spellcheck="false" autocomplete="off">
+            <select id="limit-mins">
+              <option value="15">15分</option><option value="30" selected>30分</option><option value="60">60分</option>
+              <option value="90">90分</option><option value="120">120分</option><option value="180">180分</option>
+            </select>
+            <button class="pill" data-i18n="set.limitAdd"></button>
+          </form>
+        </section>
+        <section>
+          <h2 data-i18n="set.translate"></h2>
+          <label class="row">
+            <span><span data-i18n="set.translateEngine"></span><small data-i18n="set.translateNote"></small></span>
+            <select id="tr-engine">
+              <option value="google">Google</option>
+              <option value="deepl">DeepL</option>
+            </select>
+          </label>
+          <form class="add" id="deepl-form" hidden>
+            <input id="deepl-key" type="password" data-i18n-placeholder="set.deeplKey" autocomplete="off" spellcheck="false">
+            <button class="pill" type="submit" data-i18n="set.save"></button>
+          </form>
+          <p class="note" id="deepl-status"></p>
+        </section>
+        <section>
+          <h2 data-i18n="set.layout"></h2>
+          <div class="row slider"><span data-i18n="set.sidebarWidth"></span><input type="range" id="sidebarW"><output id="sidebarW-v"></output></div>
+          <div class="row slider"><span data-i18n="set.aiWidth"></span><input type="range" id="aiW"><output id="aiW-v"></output></div>
+          <p class="note"><span data-i18n="set.widthNote"></span><button id="reset-widths" class="link" data-i18n="set.resetWidths"></button></p>
+        </section>
+      </div>
+
+      <!-- ===== プライバシー ===== -->
+      <div class="page" data-page="privacy">
+        <section>
+          <h2 data-i18n="set.protection"></h2>
+          <label class="row">
+            <span><span data-i18n="set.adblock"></span><small id="adblock-status"></small></span>
+            <input type="checkbox" class="switch" data-option="adblock">
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.sponsorSkip"></span><small data-i18n="set.sponsorSkipNote"></small></span>
+            <input type="checkbox" class="switch" data-option="sponsorSkip">
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.https"></span><small data-i18n="set.httpsNote"></small></span>
+            <input type="checkbox" class="switch" data-option="httpsOnly">
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.gpc"></span><small data-i18n="set.gpcNote"></small></span>
+            <input type="checkbox" class="switch" data-option="gpc">
+          </label>
+          <label class="row">
+            <span><span data-i18n="set.saveHistory"></span><small data-i18n="set.saveHistoryNote"></small></span>
+            <input type="checkbox" class="switch" data-option="saveHistory">
+          </label>
+        </section>
+        <section>
+          <h2 data-i18n="set.sitePermissions"></h2>
+          <p class="note" data-i18n="set.sitePermissionsNote"></p>
+          <div id="permissions" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.hidden"></h2>
+          <p class="note" data-i18n="set.hiddenNote"></p>
+          <div id="hidden" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.exceptions"></h2>
+          <div id="exceptions" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.clearData"></h2>
+          <div class="row"><span><span data-i18n="set.cache"></span><small data-i18n="set.cacheNote"></small></span><button class="pill" id="clear-cache" data-i18n="common.delete"></button></div>
+          <div class="row"><span><span data-i18n="set.cookies"></span><small data-i18n="set.cookiesNote"></small></span><button class="pill danger" id="clear-all" data-i18n="common.delete"></button></div>
+          <div class="row">
+            <span data-i18n="set.history"></span>
+            <span class="inline">
+              <select id="history-range">
+                <option value="hour" data-i18n="set.lastHour"></option>
+                <option value="day" data-i18n="set.lastDay"></option>
+                <option value="week" data-i18n="set.lastWeek"></option>
+                <option value="all" data-i18n="set.allTime"></option>
+              </select>
+              <button class="pill danger" id="clear-history" data-i18n="common.delete"></button>
+            </span>
+          </div>
+          <p class="note" id="clear-status"></p>
+        </section>
+      </div>
+
+      <!-- ===== パスワード ===== -->
+      <div class="page" data-page="passwords">
+        <section>
+          <label class="row">
+            <span><span data-i18n="set.pwOffer"></span><small id="pw-status" data-i18n="set.pwOfferNote"></small></span>
+            <input type="checkbox" class="switch" data-option="passwordSave">
+          </label>
+          <div class="add"><input id="pw-q" data-i18n-placeholder="set.pwSearch" spellcheck="false"></div>
+          <div id="pw-list" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.pwNever"></h2>
+          <div id="pw-never" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.pwImport"></h2>
+          <p class="note" data-i18n="set.pwImportNote"></p>
+          <div class="row buttons"><button class="pill" id="pw-import" data-i18n="set.pwImportButton"></button></div>
+          <p class="note" id="pw-import-status"></p>
+        </section>
+      </div>
+
+      <!-- ===== 履歴 ===== -->
+      <div class="page" data-page="history">
+        <section>
+          <h2 data-i18n="set.archive"></h2>
+          <label class="row">
+            <span><span data-i18n="set.archiveAfter"></span><small data-i18n="set.archiveNote"></small></span>
+            <select id="archive-after"></select>
+          </label>
+          <div id="archive" class="list" data-i18n-empty="common.none"></div>
+        </section>
+        <section>
+          <h2 data-i18n="set.tabHistory"></h2>
+          <div class="add"><input id="history-q" data-i18n-placeholder="set.searchHistory" spellcheck="false"></div>
+          <div id="history" class="list history" data-i18n-empty="set.noHistory"></div>
+          <p class="note" id="history-note"></p>
+        </section>
+      </div>
+
+      <!-- ===== プロフィール ===== -->
+      <div class="page" data-page="profiles">
+        <section>
+          <h2 data-i18n="set.profiles"></h2>
+          <p class="note" data-i18n="set.profilesNote"></p>
+          <div id="profiles" class="list"></div>
+          <form id="add-profile" class="add">
+            <input id="new-profile" data-i18n-placeholder="set.newProfile" maxlength="30">
+            <button class="pill" type="submit" data-i18n="common.add"></button>
+          </form>
+        </section>
+        <section>
+          <h2 data-i18n="set.favorites"></h2>
+          <p class="note" data-i18n="set.favoritesNote"></p>
+          <div id="favorites" class="list" data-i18n-empty="common.none"></div>
+        </section>
+      </div>
+
+      <!-- ===== 拡張機能 ===== -->
+      <div class="page" data-page="extensions">
+        <section>
+          <h2 data-i18n="set.extensions"></h2>
+          <p class="note" data-i18n="set.extensionsNote"></p>
+          <div id="extensions" class="list" data-i18n-empty="common.none"></div>
+          <p class="note" id="ext-status"></p>
+          <div class="row buttons"><button class="pill pri" id="open-webstore" data-i18n="set.openWebStore"></button></div>
+        </section>
+      </div>
+
+      <!-- ===== ほかのブラウザから読み込む ===== -->
+      <div class="page" data-page="import">
+        <section>
+          <h2 data-i18n="set.importFrom"></h2>
+          <p class="note" data-i18n="set.importNote"></p>
+          <label class="row"><span data-i18n="set.importSource"></span><select id="imp-source"></select></label>
+          <label class="row"><span data-i18n="set.importBookmarks"></span><input type="checkbox" class="switch" id="imp-bookmarks" checked></label>
+          <label class="row"><span><span data-i18n="set.importFavorites"></span><small data-i18n="set.importFavoritesNote"></small></span><input type="checkbox" class="switch" id="imp-favorites" checked></label>
+          <label class="row"><span data-i18n="set.importHistory"></span><input type="checkbox" class="switch" id="imp-history" checked></label>
+          <div class="row buttons"><button class="pill pri" id="imp-run" data-i18n="set.importRun"></button></div>
+          <p class="note" id="imp-status"></p>
+        </section>
+        <section>
+          <h2 data-i18n="set.bookmarks"></h2>
+          <div class="row">
+            <span><span id="bm-count"></span><small data-i18n="set.bookmarksNote"></small></span>
+            <button class="pill danger" id="bm-clear" data-i18n="set.bookmarksClear"></button>
+          </div>
+        </section>
+        <section>
+          <h2 data-i18n="set.pwImport"></h2>
+          <p class="note" data-i18n="set.pwImportNote"></p>
+          <div class="row buttons"><button class="pill" id="pw-import2" data-i18n="set.pwImportButton"></button></div>
+        </section>
+      </div>
+
+      <!-- ===== システム ===== -->
+      <div class="page" data-page="system">
+        <section>
+          <h2 data-i18n="set.performance"></h2>
+          <label class="row">
+            <span><span data-i18n="set.sleep"></span><small data-i18n="set.sleepNote"></small></span>
+            <select id="sleep"></select>
+          </label>
+          <div class="row">
+            <span><span data-i18n="set.memory"></span><small id="memory-detail" data-i18n="set.measuring"></small></span>
+            <span class="inline"><b id="memory">—</b><button class="pill" id="sleep-now" data-i18n="set.sleepNow"></button></span>
+          </div>
+        </section>
+        <section>
+          <h2 data-i18n="set.downloads"></h2>
+          <div class="row">
+            <span><span data-i18n="set.saveTo"></span><small id="download-dir" class="path"></small></span>
+            <button class="pill" id="choose-dir" data-i18n="common.change"></button>
+          </div>
+          <label class="row">
+            <span data-i18n="set.askDownload"></span>
+            <input type="checkbox" class="switch" data-option="askDownload">
+          </label>
+        </section>
+        <section>
+          <h2 data-i18n="set.about"></h2>
+          <div class="about">
+            <img src="icon.png" alt="" width="40" height="40">
+            <div>
+              <div class="name" id="about-name">My Browser</div>
+              <small id="about-version"></small>
+            </div>
+          </div>
+          <label class="row">
+            <span><span data-i18n="set.autoUpdate"></span><small id="update-status"></small></span>
+            <input type="checkbox" class="switch" data-option="autoUpdate">
+          </label>
+          <div class="row buttons">
+            <button class="pill" id="check-update" data-i18n="set.checkUpdate"></button>
+            <button class="pill pri" id="install-update" hidden data-i18n="set.installUpdate"></button>
+          </div>
+          <div class="row buttons">
+            <button class="link" id="open-privacy" data-i18n="set.privacyPolicy"></button>
+            <button class="link" id="open-licenses" data-i18n="set.licenses"></button>
+            <button class="link" id="open-data" data-i18n="set.dataFolder"></button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script src="i18n.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

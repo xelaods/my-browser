@@ -1,0 +1,108 @@
+{
+  "name": "my-browser",
+  "productName": "My Browser",
+  "version": "0.4.0",
+  "description": "Arc風の縦タブとAIサイドパネルを持つ、Chromiumベースのブラウザ",
+  "author": "xelaods",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64",
+    "dist:dir": "electron-builder --dir",
+    "release": "electron-builder --win --x64 --publish always"
+  },
+  "dependencies": {
+    "@ghostery/adblocker": "^2.18.2",
+    "electron-chrome-extensions": "^4.9.0",
+    "electron-chrome-web-store": "^0.13.0",
+    "electron-updater": "^6.8.9",
+    "tldts-experimental": "^7.4.18"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.xelaods.mybrowser",
+    "productName": "My Browser",
+    "executableName": "MyBrowser",
+    "copyright": "Copyright © 2026 xelaods",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "config.js",
+      "lib/**",
+      "ui/**",
+      "build/icon.png",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "My Browser",
+      "uninstallDisplayName": "My Browser",
+      "deleteAppDataOnUninstall": false,
+      "include": "build/installer.nsh",
+      "artifactName": "MyBrowser-Setup-${version}.${ext}",
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "runAfterFinish": true,
+      "installerLanguages": [
+        "ja_JP"
+      ],
+      "language": "1041",
+      "multiLanguageInstaller": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Network",
+      "icon": "build/icon.png"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "xelaods",
+        "repo": "my-browser",
+        "releaseType": "release"
+      }
+    ]
+  }
+}

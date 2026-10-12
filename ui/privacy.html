@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'">
+<title>プライバシーポリシー</title>
+<link rel="stylesheet" href="fonts/noto-sans-jp/index.css">
+<style>
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  :root { color-scheme: light; --bg: #fff; --text: #111; --muted: #6b6b6b; --border: #e5e5e5; }
+  :root[data-theme="dark"] { & { color-scheme: dark; --bg: #161616; --text: #ededed; --muted: #a1a1a1; --border: #2a2a2a; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.8 "Geist", "Noto Sans JP Variable", sans-serif; -webkit-font-smoothing: antialiased; }
+  main { max-width: 680px; margin: 0 auto; padding: 56px 28px 80px; }
+  h1 { font-size: 26px; font-weight: 600; letter-spacing: -.02em; margin: 0 0 6px; }
+  .date { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; margin: 32px 0 8px; padding-top: 24px; border-top: 1px solid var(--border); }
+  p, li { color: var(--text); }
+  ul { padding-left: 1.2em; }
+  li { margin: 4px 0; }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>プライバシーポリシー</h1>
+  <div class="date">My Browser・最終更新 2026年10月</div>
+
+  <p>My Browser は、あなたの閲覧データを開発者や第三者に送りません。データはすべてあなたのパソコンの中に保存されます。</p>
+
+  <h2>パソコンの中に保存するもの</h2>
+  <ul>
+    <li>開いていたタブ、お気に入り、プロフィール、設定</li>
+    <li>閲覧履歴（URL欄の候補に使います。設定でオフにできます）</li>
+    <li>Cookie やログイン状態などのサイトのデータ（Chromium と同じ仕組みで保存します）</li>
+    <li>サイトに許可・ブロックした権限（カメラ、マイク、位置情報、通知など）</li>
+    <li>Chromeウェブストアから追加した拡張機能</li>
+  </ul>
+  <p>シークレットタブで見たページの履歴・Cookie・キャッシュは保存されず、シークレットタブをすべて閉じると消えます。保存場所は「設定 → システム → データの保存場所」から確認できます。</p>
+
+  <h2>外部に通信するもの</h2>
+  <ul>
+    <li><b>見ているWebサイト</b>：通常のブラウザと同じように、表示に必要な通信を行います。</li>
+    <li><b>検索エンジン</b>：URL欄や新しいタブで検索したとき、設定で選んだ検索エンジンに検索語を送ります。入力中の文字は送りません（候補はこのパソコンの履歴とお気に入りから出します）。</li>
+    <li><b>AIパネル</b>：「要約」などのボタンを押したときだけ、表示中のページのタイトル・URL・本文（または選択した部分）を、AIパネルで開いているAIサービスの入力欄に貼り付けます。送信するかどうかはあなたが決めます。送信した内容の扱いは、そのAIサービスのプライバシーポリシーに従います。</li>
+    <li><b>広告とトラッカーのブロック</b>：数日に1回、ブロック用のリスト（EasyList・EasyPrivacy など）を GitHub からダウンロードします。閲覧したページの情報は送りません。</li>
+    <li><b>拡張機能</b>：拡張機能は Chromeウェブストアからダウンロード・更新します。追加した拡張機能は、それぞれのプライバシーポリシーに従います。</li>
+    <li><b>自動アップデート</b>：インストール版では、GitHub に新しいバージョンがあるかを確認します。送るのはアプリのバージョンなど更新に必要な情報だけです。設定でオフにできます。</li>
+  </ul>
+
+  <h2>送らないもの</h2>
+  <ul>
+    <li>利用状況の統計（テレメトリー）やクラッシュレポートは送りません。</li>
+    <li>広告目的のIDやトラッキングは使いません。</li>
+  </ul>
+
+  <h2>あなたが選べること</h2>
+  <ul>
+    <li>閲覧履歴・Cookie・キャッシュは「設定 → プライバシー」からいつでも削除できます。</li>
+    <li>サイトの権限は、URL欄の鍵マークか「設定 → プライバシー」で変更できます。</li>
+    <li>「トラッキングの拒否を伝える」をオンにすると、サイトに Global Privacy Control（GPC）を送ります。</li>
+  </ul>
+
+  <h2>お問い合わせ</h2>
+  <p class="muted">配布元のページ（GitHub のリポジトリ）からお問い合わせください。</p>
+</main>
+</body>
+</html>
