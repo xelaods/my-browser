@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      # すでに同じバージョンを公開していたら何もしない
+      # すでに同じバージョンを公開していたら何もしない（途中で失敗したものは作り直す）
       - name: check version
         id: ver
         shell: bash
@@ -24,7 +24,12 @@ jobs:
         run: |
           v="v$(node -p "require('./package.json').version")"
           echo "tag=$v" >> "$GITHUB_OUTPUT"
-          if gh release view "$v" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+          assets="$(gh release view "$v" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null || true)"
+          if echo "$assets" | grep -qx latest.yml; then echo "skip=1" >> "$GITHUB_OUTPUT";
+          elif [ -n "$assets" ]; then
+            # 途中で失敗した公開（自動アップデート用の latest.yml が無い）は消して作り直す
+            gh release delete "$v" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+          fi
       - uses: actions/setup-node@v4
         if: steps.ver.outputs.skip != '1'
         with:
