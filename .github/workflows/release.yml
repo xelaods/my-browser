@@ -1,9 +1,13 @@
-# v0.2.0 のようなタグを push すると、Windows 用のインストーラーを作って GitHub Releases に公開する
-# （公開したインストーラーは、インストール済みのアプリが自動アップデートで取りに来る）
+# package.json の version を上げて main に push すると（または v0.4.0 のようなタグを push すると）、
+# Windows 用のインストーラーを作って GitHub Releases に公開する。
+# 公開したインストーラーは、インストール済みのアプリが自動アップデートで取りに来る
 name: release
 on:
   push:
+    branches: [main]
+    paths: [package.json]
     tags: ['v*']
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -11,12 +15,25 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      # すでに同じバージョンを公開していたら何もしない
+      - name: check version
+        id: ver
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          v="v$(node -p "require('./package.json').version")"
+          echo "tag=$v" >> "$GITHUB_OUTPUT"
+          if gh release view "$v" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then echo "skip=1" >> "$GITHUB_OUTPUT"; fi
       - uses: actions/setup-node@v4
+        if: steps.ver.outputs.skip != '1'
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+        if: steps.ver.outputs.skip != '1'
       - run: npx electron-builder --win --x64 --publish always
+        if: steps.ver.outputs.skip != '1'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # コード署名する場合は、証明書を Secrets に登録して次の2行を有効にする
